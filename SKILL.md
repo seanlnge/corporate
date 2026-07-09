@@ -158,6 +158,7 @@ docs/structure/
   agent.md            # Worker role (optional if this skill covers it)
 
 docs/agents/
+  README.md           # Map of the living context tree — how to read it
   executive/          # Executive's manager folder  (some projects name this ceo/ — pick one, stay consistent)
     CEO.md              # Project executive bootstrap (domain-specific — NOT this skill)
     _context.md         # Executive rolling notes + direct-child roster
@@ -166,6 +167,11 @@ docs/agents/
       _context.md
       <scope>.md
 ```
+
+**These files ship with the skill as fill-in templates** — the skill folder's
+own `docs/` tree *is* this layout. Cold-start scaffolding (below) copies it into
+the target repo's `docs/` rather than inventing files from scratch — every
+`<...>` placeholder is a domain fill-in for the human.
 
 - **Manager** = a **directory**: `docs/agents/<chain>/<name>/`
 - **Worker** = a **single `.md` file** inside a manager's directory
@@ -350,18 +356,23 @@ Blocked:
 
 ## Cold-start scaffolding (structure absent)
 
-If the layout doesn't exist and the user wants orchestration, scaffold a
-**skeleton** — do not invent domain content:
+If the layout doesn't exist and the user wants orchestration, **copy the bundled
+templates** from this skill folder's `docs/` into the target repo's `docs/` —
+do not invent domain content:
 
-1. Create `docs/structure/` and `docs/agents/executive/`.
-2. Write a stub `docs/structure/global.md` with empty sections: charter,
-   status table, global rules, and a **verification command** line to fill in.
-3. Write a skeleton executive bootstrap `docs/agents/executive/CEO.md` with the
-   section headers a project bootstrap needs — *What you are · Read order · Task
-   sizing · Blocked/handoff · Escalation to human · Living-context tree · Locked
-   architecture · Do-not* — each left as `<fill in>`.
-4. Hand the filled outline to the human to complete. The skill supplies
-   structure; the human supplies charter, ADRs, and the verification command.
+1. Copy the skill's `docs/structure/` and `docs/agents/` into the repo's `docs/`.
+   This brings over `global.md`, `corporate.md`, `executive.md`,
+   `management.md`, `agent.md`, the `agents/README.md` map, and `executive/CEO.md`
+   + `executive/_context.md` — each already carrying the right section headers
+   with `<...>` placeholders.
+2. Hand the placeholders to the human to complete. Charter, status table, and
+   the **verification command** live in `global.md`; charter/read-order/task
+   sizing/locked-architecture live in `CEO.md`.
+3. The skill supplies structure; the human supplies charter, ADRs, and the
+   verification command. Fill every `<...>` before first orchestrated run.
+
+If your tool can't reach the skill folder at scaffold time, recreate the same
+tree by hand from the **Documentation layout** section above.
 
 ---
 
@@ -376,8 +387,20 @@ If the layout doesn't exist and the user wants orchestration, scaffold a
 
 ## Installing
 
-Copy this folder into your tool's skills directory and attach it when
-orchestrating. Skill locations differ by tool and change over time — check the
-current path for yours (Claude Code uses `.claude/skills/`; Cursor uses a
-different mechanism). Pair with a project `docs/agents/executive/CEO.md` for
+The skill **is** this whole folder (a `SKILL.md` plus its bundled `docs/`
+template tree). To install, copy the folder — named `corporate/` — into your
+tool's skills directory:
+
+- **Claude Code, all projects:** `~/.claude/skills/corporate/`
+- **Claude Code, one project:** `<project>/.claude/skills/corporate/`
+- **Other tools** (e.g. Cursor) use a different mechanism and path — check the
+  current location for yours.
+
+Skill locations change over time, so confirm the path before copying. Once
+installed, attach the skill when orchestrating a multi-part effort.
+
+The skill folder bundles the full `docs/` template tree (structure docs + a
+fill-in executive bootstrap at `docs/agents/executive/CEO.md`). On a fresh
+project, copy that tree into the repo's `docs/` per **Cold-start scaffolding**
+and fill in the `<...>` placeholders — that becomes the project's
 domain-specific bootstrap.

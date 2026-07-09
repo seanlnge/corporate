@@ -87,15 +87,19 @@ A **manager** is a directory; a **worker** is a single `.md` file inside one.
 
 ## Install
 
-Copy this folder into your tool's skills directory and attach it when you're
-orchestrating a multi-part effort. Locations differ by tool and change over time,
-so check the current path for yours — Claude Code uses `.claude/skills/`; Cursor
-uses a different mechanism.
+The skill is this whole folder. Copy it — named `corporate/` — into your tool's
+skills directory, then attach it when orchestrating a multi-part effort:
 
-The skill is project-agnostic. Pair it with a project-specific executive
-bootstrap at `docs/agents/executive/CEO.md` (charter, read order, task sizing,
-locked architecture, verification command). If the structure doesn't exist yet,
-the skill will scaffold a skeleton and hand you the domain fill-ins.
+- Claude Code, all projects: `~/.claude/skills/corporate/`
+- Claude Code, one project: `<project>/.claude/skills/corporate/`
+- Other tools (e.g. Cursor) use a different mechanism — check the path for yours.
+
+The skill is project-agnostic and **bundles the full `docs/` template tree** —
+structure docs plus a fill-in executive bootstrap at
+`docs/agents/executive/CEO.md` (charter, read order, task sizing, locked
+architecture, verification command). If the structure doesn't exist in your repo
+yet, the skill copies these templates into your `docs/` and hands you the `<...>`
+domain fill-ins.
 
 ## Runtime notes
 
